@@ -71,8 +71,7 @@ start_mysql_containers(){
     for N in 1 2 3 4
       do sudo docker run -d --name=mysql$N --hostname=mysql$N --net=innodbnet \
       -v $PWD/my$N.cnf:/etc/my.cnf \
-      -e MYSQL_ROOT_PASSWORD=root $1 \
-      -e PERCONA_TELEMETRY_URL=https://check-dev.percona.com/v1/telemetry/GenericReport
+      -e MYSQL_ROOT_PASSWORD=root $1
     done
     sleep 60
 }
@@ -131,7 +130,7 @@ Router_Bootstrap(){
 
 data_add(){
 
-    sudo docker run -d --name=mysql-client --hostname=mysql-client --net=innodbnet -e MYSQL_ROOT_PASSWORD=root -e PERCONA_TELEMETRY_URL=https://check-dev.percona.com/v1/telemetry/GenericReport $1
+    sudo docker run -d --name=mysql-client --hostname=mysql-client --net=innodbnet -e MYSQL_ROOT_PASSWORD=root $1
     
     sleep 10
         
