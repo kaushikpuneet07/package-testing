@@ -118,6 +118,9 @@
   - name: start proxysql service
     command: service proxysql start
 
+  - name: enable the major pdps-8.0 testing
+    command: percona-release enable-only pdps-8.0 testing
+
   - name: install orchestrator new deb packages
     apt:
       name: "{{ packages }}"
@@ -175,6 +178,13 @@
       - percona-mysql-router
     when: ansible_os_family == "Debian"
 
+  - name: enable the pdps-{{ version }} {{ repo }}
+    command: percona-release enable-only pdps-{{ version }} {{ repo }}
+    vars:
+      repo: "{{ lookup('env', 'REPO') }}"
+      version: "{{ lookup('env', 'VERSION').split('-')[0] }}"
+    when: not major_repo
+    
   - name: install additional packages for CentOS
     yum:
       name: "{{ packages }}"
