@@ -174,7 +174,7 @@
       - percona-mysql-shell
       - percona-mysql-router
     when: ansible_os_family == "Debian"
-    
+
   - name: install additional packages for CentOS
     yum:
       name: "{{ packages }}"
