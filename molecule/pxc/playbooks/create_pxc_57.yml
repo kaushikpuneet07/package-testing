@@ -117,7 +117,7 @@
 
       rescue:
         - name: Create molecule instance(s)
-          ec2:
+          ec2_instance:
             key_name: "{{ keypair_name }}"
             image: "{{ item.image }}"
             instance_type: "{{ item.instance_type }}"
