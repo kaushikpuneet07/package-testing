@@ -20,6 +20,12 @@ def host():
     yield testinfra.get_host("docker://root@" + docker_id)
     subprocess.check_call(['docker', 'rm', '-f', docker_id])
 
+def print_logs(container_name):
+    try:
+        logs = subprocess.check_output(['docker', 'logs', container_name]).decode()
+        print(f"Logs for {container_name}:\n{logs}")
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to get logs for {container_name}: {e}")
 
 class TestMysqlEnvironment:
     @pytest.mark.parametrize("pkg_name,pkg_version", pxc_packages)

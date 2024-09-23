@@ -40,6 +40,10 @@ class PxcNode:
                 '--net='+docker_network, '-d', docker_image]).decode().strip()
         self.ti_host = testinfra.get_host("docker://root@" + self.docker_id)
 
+    def print_logs(self):
+        logs = subprocess.check_output(['docker', 'logs', self.docker_id]).decode()
+        print(f"Logs for {self.docker_id}:\n{logs}")
+
     def destroy(self):
         subprocess.check_call(['docker', 'rm', '-f', self.docker_id])
         if self.bootstrap_node:
