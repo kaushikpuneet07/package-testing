@@ -41,8 +41,11 @@ class PxcNode:
         self.ti_host = testinfra.get_host("docker://root@" + self.docker_id)
 
     def print_logs(self):
-        logs = subprocess.check_output(['docker', 'logs', self.docker_id]).decode()
-        print(f"Logs for {self.docker_id}:\n{logs}")
+        try:
+            logs = subprocess.check_output(['docker', 'logs', self.docker_id]).decode()
+            print(f"Logs for {self.docker_id}:\n{logs}")
+        except subprocess.CalledProcessError as e:
+            print(f"Error fetching logs for {self.docker_id}: {e}")
 
     def destroy(self):
         subprocess.check_call(['docker', 'rm', '-f', self.docker_id])
@@ -137,6 +140,7 @@ class TestCluster:
         for node in cluster:
             output = node.run_query('SELECT name FROM mysql.func WHERE dl = "'+soname+'";')
             assert fname in output
+            node.print_logs()  # Print logs after each function installation
 
     @pytest.mark.parametrize("pname,soname", pxc_plugins)
     def test_install_plugin(self, cluster, pname, soname):
