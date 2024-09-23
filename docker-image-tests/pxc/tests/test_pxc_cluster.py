@@ -14,7 +14,7 @@ class PxcNode:
         if bootstrap_node:
             self.docker_id = subprocess.check_output(
                 ['docker', 'run', '--name', node_name, '-e', 'MYSQL_ROOT_PASSWORD='+pxc_pwd, 
-                 '-e', 'CLUSTER_NAME='+cluster_name, '-e', 'PERCONA_TELEMETRY_URL=https://check-dev.percona.com/v1/telemetry/GenericReport',
+                 '-e', 'CLUSTER_NAME='+cluster_name,
                  '--net='+docker_network, '-d', docker_image]).decode().strip()
             time.sleep(120)
             if pxc_version_major == "8.0" or re.match(r'^8\.[1-9]$', pxc_version_major):
@@ -30,7 +30,6 @@ class PxcNode:
                 self.docker_id = subprocess.check_output(
                 ['docker', 'run', '--name', node_name, '-e', 'MYSQL_ROOT_PASSWORD='+pxc_pwd,
                 '-e', 'CLUSTER_NAME='+cluster_name, '-e', 'CLUSTER_JOIN='+base_node_name+'1',
-                '-e', 'PERCONA_TELEMETRY_DISABLE=1',
                 '--net='+docker_network,'-v', test_pwd+'/config:/etc/percona-xtradb-cluster.conf.d',
                 '-v', test_pwd+'/cert:/cert', '-d', docker_image]).decode().strip()
             else:
@@ -39,13 +38,6 @@ class PxcNode:
                 '-e', 'CLUSTER_NAME='+cluster_name, '-e', 'CLUSTER_JOIN='+base_node_name+'1',
                 '--net='+docker_network, '-d', docker_image]).decode().strip()
         self.ti_host = testinfra.get_host("docker://root@" + self.docker_id)
-
-    def print_logs(self):
-        try:
-            logs = subprocess.check_output(['docker', 'logs', self.docker_id]).decode()
-            print(f"Logs for {self.docker_id}:\n{logs}")
-        except subprocess.CalledProcessError as e:
-            print(f"Error fetching logs for {self.docker_id}: {e}")
 
     def destroy(self):
         subprocess.check_call(['docker', 'rm', '-f', self.docker_id])
@@ -140,7 +132,6 @@ class TestCluster:
         for node in cluster:
             output = node.run_query('SELECT name FROM mysql.func WHERE dl = "'+soname+'";')
             assert fname in output
-            node.print_logs()  # Print logs after each function installation
 
     @pytest.mark.parametrize("pname,soname", pxc_plugins)
     def test_install_plugin(self, cluster, pname, soname):
