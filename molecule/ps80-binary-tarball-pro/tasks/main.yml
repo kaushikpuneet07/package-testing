@@ -6,6 +6,13 @@
       name: epel-release
     when: ansible_os_family == "RedHat"
 
+  - name: Update all packages
+    yum:
+      name: "*"
+      state: latest
+      update_cache: true
+   when: ansible_os_family == "RedHat"
+
   - name: install needed packages for running tests with apt
     apt:
       name: "{{ packages }}"
