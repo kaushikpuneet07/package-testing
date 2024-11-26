@@ -22,8 +22,7 @@
       - libnuma1
       - tar
       - gawk
-      - libldap
-      - libldap-devel
+      - openldap
     register: result
     until: result is not failed
     when: ansible_os_family == "Debian"
