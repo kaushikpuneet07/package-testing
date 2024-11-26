@@ -43,6 +43,8 @@
       - python3
       - python3-pip
       - libtirpc
+      - openldap-servers
+      - openldap-clients
     when: ansible_os_family == "RedHat"
 
 #      - openldap // this package causes issue on OL-9
