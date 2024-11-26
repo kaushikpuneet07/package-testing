@@ -139,17 +139,33 @@
       - --transform
       - 's,^/*[^/]*,/usr/percona-server-minimal,S'
 
-  - name: Download debug {{ DEBUG_TARBALL_NAME }}
-    get_url:
-      url: '{{ DEBUG_TARBALL_LINK }}'
-      dest: /tmp/percona-server-{{ lookup('env', 'PS_VERSION') }}-debug.tar.gz
-      mode: '0644'
+  - name: List all files in the / directory
+    ansible.builtin.shell: ls -la /
+    register: list_files
 
-  - name: Unpack debug tarball
-    unarchive:
-      src: /tmp/percona-server-{{ lookup('env', 'PS_VERSION') }}-debug.tar.gz
-      dest: /
-      remote_src: yes
-      extra_opts:
-      - --transform
-      - 's,^/*[^/]*,/usr/percona-server-debug,S'
+  - name: Display the list of files
+    debug:
+      var: list_files.stdout_lines
+
+  - name: List all files in the /tmp directory
+    ansible.builtin.shell: ls -la /tmp
+    register: list_files_tmp
+
+  - name: Display the list of files /tmp
+    debug:
+      var: list_files_tmp.stdout_lines
+
+#  - name: Download debug {{ DEBUG_TARBALL_NAME }}
+#    get_url:
+#      url: '{{ DEBUG_TARBALL_LINK }}'
+#      dest: /tmp/percona-server-{{ lookup('env', 'PS_VERSION') }}-debug.tar.gz
+#      mode: '0644'
+
+#  - name: Unpack debug tarball
+#    unarchive:
+#      src: /tmp/percona-server-{{ lookup('env', 'PS_VERSION') }}-debug.tar.gz
+#      dest: /
+#      remote_src: yes
+#      extra_opts:
+#      - --transform
+#      - 's,^/*[^/]*,/usr/percona-server-debug,S'
