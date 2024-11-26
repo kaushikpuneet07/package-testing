@@ -139,8 +139,8 @@
       - --transform
       - 's,^/*[^/]*,/usr/percona-server-minimal,S'
 
-  - name: List all files in the / directory
-    ansible.builtin.shell: ls -la /
+  - name: List all files in the /usr directory
+    ansible.builtin.shell: ls -la /usr
     register: list_files
 
   - name: Display the list of files
