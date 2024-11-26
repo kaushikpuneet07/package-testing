@@ -155,17 +155,17 @@
     debug:
       var: list_files_tmp.stdout_lines
 
-#  - name: Download debug {{ DEBUG_TARBALL_NAME }}
-#    get_url:
-#      url: '{{ DEBUG_TARBALL_LINK }}'
-#      dest: /tmp/percona-server-{{ lookup('env', 'PS_VERSION') }}-debug.tar.gz
-#      mode: '0644'
+  - name: Download debug {{ DEBUG_TARBALL_NAME }}
+    get_url:
+      url: '{{ DEBUG_TARBALL_LINK }}'
+      dest: /tmp/percona-server-{{ lookup('env', 'PS_VERSION') }}-debug.tar.gz
+      mode: '0644'
 
-#  - name: Unpack debug tarball
-#    unarchive:
-#      src: /tmp/percona-server-{{ lookup('env', 'PS_VERSION') }}-debug.tar.gz
-#      dest: /
-#      remote_src: yes
-#      extra_opts:
-#      - --transform
-#      - 's,^/*[^/]*,/usr/percona-server-debug,S'
+  - name: Unpack debug tarball
+    unarchive:
+      src: /tmp/percona-server-{{ lookup('env', 'PS_VERSION') }}-debug.tar.gz
+      dest: /
+      remote_src: yes
+      extra_opts:
+      - --transform
+      - 's,^/*[^/]*,/usr/percona-server-debug,S'
