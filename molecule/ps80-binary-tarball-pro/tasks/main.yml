@@ -18,10 +18,12 @@
       - wget
       - python3
       - python3-pip
-      - libaio1 
+      - libaio1
       - libnuma1
       - tar
       - gawk
+      - libldap
+      - libldap-devel
     register: result
     until: result is not failed
     when: ansible_os_family == "Debian"
@@ -62,21 +64,29 @@
     set_fact:
       DEBUG_TARBALL_NAME: "Percona-Server-Pro-{{ lookup('env', 'PS_VERSION') }}-Linux.x86_64.glibc{{ GLIBC_VERSION }}-debug.tar.gz"
 
-  # # - name: get main repo TARBALL_LINK
-  # #   set_fact:
-  # #     TARBALL_LINK: "https://repo.percona.com/private/{{ lookup('env', 'USERNAME') }}-{{ lookup('env', 'PASSWORD') }}/ps-80-pro/tarballs/Percona-Server-{{ lookup('env', 'PS_VERSION') }}/"
-
   - name: get testing repo TARBALL_LINK
     set_fact:
       TARBALL_LINK: "https://repo.percona.com/private/{{ lookup('env', 'USERNAME') }}-{{ lookup('env', 'PASSWORD') }}/qa-test/ps-gated-{{ lookup('env', 'PS_VERSION') }}/{{ TARBALL_NAME }}"
+
+  - name: Print the TARBALL_LINK
+    debug:
+      msg: "The TARBALL_LINK is: {{ TARBALL_LINK }}"
 
   - name: get testing repo MINIMAL_TARBALL_LINK
     set_fact:
       MINIMAL_TARBALL_LINK: "https://repo.percona.com/private/{{ lookup('env', 'USERNAME') }}-{{ lookup('env', 'PASSWORD') }}/qa-test/ps-gated-{{ lookup('env', 'PS_VERSION') }}/{{ MINIMAL_TARBALL_NAME }}"
 
+  - name: Print the MINIMAL_TARBALL_LINK
+    debug:
+      msg: "The MINIMAL_TARBALL_LINK is: {{ MINIMAL_TARBALL_LINK }}"
+
   - name: get testing repo DEBUG_TARBALL_LINK
     set_fact:
       DEBUG_TARBALL_LINK: "https://repo.percona.com/private/{{ lookup('env', 'USERNAME') }}-{{ lookup('env', 'PASSWORD') }}/qa-test/ps-gated-{{ lookup('env', 'PS_VERSION') }}/{{ DEBUG_TARBALL_NAME }}"
+
+  - name: Print the DEBUG_TARBALL_LINK
+    debug:
+      msg: "The DEBUG_TARBALL_LINK is: {{ DEBUG_TARBALL_LINK }}"
 
   - name: download package-testing repo branch with wget
     command: "{{ item }}"
