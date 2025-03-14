@@ -36,10 +36,10 @@ pipeline {
                                 if [ "${REPO}" = "main" ]; then
                                     TARBALL_LINK="https://repo.percona.com/private/${USERNAME}-${PASSWORD}/pxc-57-eol/tarballs/Percona-XtraDB-Cluster-${PXC_VERSION}/"
                                 else
-                                    TARBALL_LINK="https://repo.percona.com/private/${USERNAME}-${PASSWORD}/qa-test/pxc-gated-${PXC_VERSION}/"
+                                    TARBALL_LINK="https://repo.percona.com/private/${USERNAME}-${PASSWORD}/qa-test/pxc-gated-${PXC_VERSION}-${pkg}/"
                                 fi
                                 rm -rf package-testing
-                                git clone https://github.com/Percona-QA/package-testing.git --branch master --depth 1
+                                git clone https://github.com/kaushikpuneet07/package-testing.git --branch master pxc-eol-tar --depth 1
                                 cd package-testing/binary-tarball-tests/pxc
                                 wget -q ${TARBALL_LINK}${TARBALL_NAME}
                                 ./run.sh || true
@@ -68,10 +68,10 @@ pipeline {
                                 if [ "${REPO}" = "main" ]; then
                                     TARBALL_LINK="https://repo.percona.com/private/${USERNAME}-${PASSWORD}/pxc-57-eol/tarballs/Percona-XtraDB-Cluster-${PXC_VERSION}/"
                                 else
-                                    TARBALL_LINK="https://repo.percona.com/private/${USERNAME}-${PASSWORD}/qa-test/pxc-gated-${PXC_VERSION}/"
+                                    TARBALL_LINK="https://repo.percona.com/private/${USERNAME}-${PASSWORD}/qa-test/pxc-gated-${PXC_VERSION}-${pkg}/"
                                 fi
                                 rm -rf package-testing
-                                git clone https://github.com/Percona-QA/package-testing.git --branch master --depth 1
+                                git clone https://github.com/kaushikpuneet07/package-testing.git --branch pxc-eol-tar --depth 1
                                 cd package-testing/binary-tarball-tests/pxc
                                 wget -q ${TARBALL_LINK}${TARBALL_NAME}
                                 ./run.sh || true
@@ -100,10 +100,10 @@ pipeline {
                                 if [ "${REPO}" = "main" ]; then
                                     TARBALL_LINK="https://repo.percona.com/private/${USERNAME}-${PASSWORD}/pxc-57-eol/tarballs/Percona-XtraDB-Cluster-${PXC_VERSION}/"
                                 else
-                                    TARBALL_LINK="https://repo.percona.com/private/${USERNAME}-${PASSWORD}/qa-test/pxc-gated-${PXC_VERSION}/"
+                                    TARBALL_LINK="https://repo.percona.com/private/${USERNAME}-${PASSWORD}/qa-test/pxc-gated-${PXC_VERSION}-${pkg}/"
                                 fi
                                 rm -rf package-testing
-                                git clone https://github.com/Percona-QA/package-testing.git --branch master --depth 1
+                                git clone https://github.com/kaushikpuneet07/package-testing.git --branch pxc-eol-tar --depth 1
                                 cd package-testing/binary-tarball-tests/pxc
                                 wget -q ${TARBALL_LINK}${TARBALL_NAME}
                                 ./run.sh || true
@@ -132,10 +132,10 @@ pipeline {
                                 if [ "${REPO}" = "main" ]; then
                                     TARBALL_LINK="https://repo.percona.com/private/${USERNAME}-${PASSWORD}/pxc-57-eol/tarballs/Percona-XtraDB-Cluster-${PXC_VERSION}/"
                                 else
-                                    TARBALL_LINK="https://repo.percona.com/private/${USERNAME}-${PASSWORD}/qa-test/pxc-gated-${PXC_VERSION}/"
+                                    TARBALL_LINK="https://repo.percona.com/private/${USERNAME}-${PASSWORD}/qa-test/pxc-gated-${PXC_VERSION}-${pkg}/"
                                 fi
                                 rm -rf package-testing
-                                git clone https://github.com/Percona-QA/package-testing.git --branch master --depth 1
+                                git clone https://github.com/kaushikpuneet07/package-testing.git --branch pxc-eol-tar --depth 1
                                 cd package-testing/binary-tarball-tests/pxc
                                 wget -q ${TARBALL_LINK}${TARBALL_NAME}
                                 ./run.sh || true
