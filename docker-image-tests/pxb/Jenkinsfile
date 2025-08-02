@@ -18,7 +18,7 @@ pipeline {
               wget https://github.com/kaushikpuneet07/package-testing/archive/pxb-docker.zip
               unzip master.zip
               rm -f master.zip
-              mv "package-testing-pxb-docker" package-testing
+              mv "package-testing-pxb-docker" /package-testing
             '''
                     
             def VERSION = sh(
