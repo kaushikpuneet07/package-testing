@@ -1,0 +1,23 @@
+- job:
+    name: test-pxb-docker-image
+    project-type: pipeline
+    description: |
+        Do not edit this job through the web!
+    pipeline-scm:
+      scm:
+        - git:
+            url: https://github.com/kaushikpuneet07/package-testing.git
+            branches:
+            - 'pxb-docker'
+            wipe-workspace: false
+      lightweight-checkout: true
+      script-path: docker-image-tests/pxb/Jenkinsfile
+      parameters:
+        - choice:
+            name: product_to_test
+            choices:
+                - "PXB80"
+                - "PXB84"
+            description: "Product for which the packages will be tested"
+
+
