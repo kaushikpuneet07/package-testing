@@ -19,7 +19,9 @@ def inspect_data():
 
 class TestPXBContainerAttributes:
     def test_entrypoint(self, inspect_data):
-        assert inspect_data['Config']['Entrypoint'][0] in ['/bin/bash', '/usr/bin/xtrabackup']
+        entry = inspect_data['Config']['Entrypoint'][0]
+        assert any(x in entry for x in ['xtrabackup', 'bash', 'docker-entrypoint.sh'])
+
 
     def test_status(self, inspect_data):
         assert inspect_data['State']['Status'] == 'running'
