@@ -10,6 +10,8 @@ mount_dir = "-v /tmp/mysql_data:/var/lib/mysql -v /var/run/mysqld:/var/run/mysql
 pxb_backup_dir = "/tmp/pxb_backup"
 target_backup_dir = pxb_backup_dir
 mysql_password = "mysql"
+pxb_docker_image = "percona/percona-xtrabackup:8.4.0-3"
+ps_docker_image = "percona/percona-server:8.4"
 
 @pytest.fixture(scope="module", autouse=True)
 def setup_mysql_container():
@@ -24,7 +26,7 @@ def setup_mysql_container():
         "-e", "PERCONA_TELEMETRY_DISABLE=1",
         "-e", "MYSQL_ROOT_HOST=%",
         "-e", f"MYSQL_ROOT_PASSWORD={mysql_password}",
-        "-d", percona/percona-server:8.4
+        "-d", ps_docker_image
     ]
     subprocess.run(start_cmd, check=True)
 
