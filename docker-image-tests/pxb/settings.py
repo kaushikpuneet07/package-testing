@@ -9,8 +9,8 @@ pxb_pkg_ver = os.getenv('PXB_PKG_VER')
 pxb_version_upstream = pxb_version
 pxb_version_major = pxb_version_upstream.split('.')[0] + '.' + pxb_version_upstream.split('.')[1]
 
-docker_product = 'percona-server'
-docker_tag = pxb_version + pxb_pkg_ver
+docker_product = 'percona-xtrabackup'
+docker_tag = pxb_version + "-" + pxb_pkg_ver
 docker_image = docker_acc + "/" + docker_product + ":" + docker_tag
 docker_image_latest = docker_acc + "/" + docker_product + ":" + "latest"
 docker_image_upstream = docker_acc + "/" + docker_product + ":" + pxb_version_upstream
