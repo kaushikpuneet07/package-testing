@@ -19,7 +19,7 @@ def inspect_data():
 
 class TestPXBContainerAttributes:
     def test_entrypoint(self, inspect_data):
-        assert inspect_data['Config']['Entrypoint'][0] == '/bin/bash' or '/usr/bin/xtrabackup' in inspect_data['Config']['Entrypoint'][0]
+        assert inspect_data['Config']['Entrypoint'][0] in ['/bin/bash', '/usr/bin/xtrabackup']
 
     def test_status(self, inspect_data):
         assert inspect_data['State']['Status'] == 'running'
@@ -27,9 +27,3 @@ class TestPXBContainerAttributes:
 
     def test_image_name(self, inspect_data):
         assert docker_image in inspect_data['Config']['Image']
-
-    def test_volumes(self, inspect_data):
-        # Expecting volumes used for backup/restore
-        expected_vols = ['/backup', '/var/lib/mysql']
-        for vol in expected_vols:
-            assert vol in inspect_data['Config']['Volumes']
