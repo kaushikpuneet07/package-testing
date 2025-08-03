@@ -143,4 +143,4 @@ ps56_functions = (
 #    ps_plugins = ps56_plugins
 #    ps_functions = ps56_functions
 
-ps_pwd = 'pwd1234#'
+test_pwd = 'pwd1234#'
