@@ -86,7 +86,7 @@ def test_mysql_and_pxb_backup_restore():
     subprocess.run([
         "sudo", "docker", "run", "--volumes-from", container_name,
         "-v", f"{pxb_backup_dir}:{pxb_backup_dir}", "-it", "--rm", "--user", "root",
-        percona/percona-xtrabackup:8.4.0-3, "/bin/bash", "-c", restore_cmd
+        pxb_docker_image, "/bin/bash", "-c", restore_cmd
     ], check=True)
 
     subprocess.run(["sudo", "chmod", "-R", "777", "/tmp/mysql_data"], check=True)
