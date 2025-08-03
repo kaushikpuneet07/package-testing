@@ -59,7 +59,6 @@ class XtrabackupNode:
 @pytest.fixture(scope='module')
 def ps():
     subprocess.call(['docker', 'pull', ps_docker_image])
-    subprocess.call(['docker', 'network', 'create', docker_network])
     node = PsNode('ps_node')
     yield node
     node.stop()

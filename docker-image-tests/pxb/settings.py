@@ -144,3 +144,4 @@ ps56_functions = (
 #    ps_functions = ps56_functions
 
 test_pwd = 'pwd1234#'
+ps_pwd = 'pwd1234#''
