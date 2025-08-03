@@ -17,7 +17,7 @@ ps_docker_image = "percona/percona-server:8.4"
 def setup_mysql_container():
     os.makedirs("/tmp/mysql_data", exist_ok=True)
     os.makedirs(pxb_backup_dir, exist_ok=True)
-    subprocess.run(["sudo", "chmod", "-R", "777", "/tmp/mysql_data", "/var/run/mysqld"], check=True)
+    subprocess.run(["sudo", "chmod", "-R", "777", "/tmp/mysql_data"], check=True)
 
     start_cmd = [
         "sudo", "docker", "run", "--name", container_name,
