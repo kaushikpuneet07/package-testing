@@ -9,7 +9,7 @@ from settings import *
 
 ps_docker_image = "percona/percona-server:8.4"
 pxb_docker_image = "percona/percona-xtrabackup:8.4"
-
+docker_network = "doc_net"
 
 class PsNode:
     def __init__(self, node_name):
