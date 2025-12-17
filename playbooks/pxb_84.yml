@@ -26,7 +26,7 @@
 #    when: lookup('env', 'install_repo') == "main"
 
   - name: include tasks for enabling PS 84 main repo
-    include_tasks: ../tasks/enable_ps84_main_repo.yml
+    include_tasks: ../tasks/enable_ps84_testing_repo.yml
     when:
       - lookup('env', 'install_repo') == "main"
 
