@@ -54,16 +54,16 @@
 
   - name: Copy KMIP certificates to /tmp/certs
     copy:
-      src: "/var/lib/mysql/{{ item }}"
+      src: "/package-testing/kmip/{{ item }}"
       dest: "/tmp/certs/{{ item }}"
       remote_src: true
       owner: mysql
       group: mysql
       mode: '0644'
     loop:
-      - client-cert.pem
-      - client-key.pem
-      - ca.pem
+      - client_certificate_john_smith.pem
+      - client_key_john_smith.pem
+      - root_certificate.pem
 
   - name: Verify copied certificates
     shell: ls -l /tmp/certs
