@@ -44,6 +44,34 @@
   - name: list installed packages
     include_tasks: ../tasks/list_installed_packages.yml
 
+  - name: Create /tmp/certs directory
+    file:
+      path: /tmp/certs
+      state: directory
+      owner: mysql
+      group: mysql
+      mode: '0755'
+
+  - name: Copy KMIP certificates to /tmp/certs
+    copy:
+      src: "/var/lib/mysql/{{ item }}"
+      dest: "/tmp/certs/{{ item }}"
+      remote_src: true
+      owner: mysql
+      group: mysql
+      mode: '0644'
+    loop:
+      - client-cert.pem
+      - client-key.pem
+      - server-ca.pem
+
+  - name: Verify copied certificates
+    shell: ls -l /tmp/certs
+    register: certs
+
+  - debug:
+      var: certs.stdout_lines
+
   - name: stop mysql service
     service: name=mysql state=stopped
 
