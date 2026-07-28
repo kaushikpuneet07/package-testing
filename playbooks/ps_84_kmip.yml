@@ -63,7 +63,7 @@
     loop:
       - client-cert.pem
       - client-key.pem
-      - server-ca.pem
+      - ca.pem
 
   - name: Verify copied certificates
     shell: ls -l /tmp/certs

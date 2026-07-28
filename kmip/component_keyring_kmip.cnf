@@ -3,5 +3,5 @@
   "server_port": "5696",
   "client_ca": "/tmp/certs/client-cert.pem",
   "client_key": "/tmp/certs/client-key.pem",
-  "server_ca": "/tmp/certs/server-ca.pem"
+  "server_ca": "/tmp/certs/ca.pem"
 }
