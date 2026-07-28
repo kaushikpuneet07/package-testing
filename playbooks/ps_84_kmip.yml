@@ -155,18 +155,59 @@
     when:
       - ansible_distribution_release not in ['bookworm', 'noble', 'trixie', 'resolute']
 
-  - name: start pykmip server
-    shell: nohup ~/.local/bin/pykmip-server -f /package-testing/kmip/server.conf -l /pykmip_server.log 2>&1 &
+  - name: Start PyKMIP server
+    shell: |
+      nohup ~/.local/bin/pykmip-server \
+        -f /package-testing/kmip/server.conf \
+        > /tmp/pykmip_server.log 2>&1 &
+      echo $! > /tmp/pykmip.pid
+    args:
+      executable: /bin/bash
     when: ansible_distribution_release in ['bookworm', 'noble', 'trixie', 'resolute']
 
-  - name: Check if kmip-server is running
-    shell: pgrep -x kmip-server
-    register: kmip_status
+  - name: Wait for server startup
+    pause:
+      seconds: 10
+
+  - name: Check kmip-server process
+    shell: |
+      ps -ef | grep pykmip-server | grep -v grep
+    register: kmip_process
     failed_when: false
     changed_when: false
 
   - debug:
-      var: kmip_status
+      var: kmip_process.stdout_lines
+
+  - name: Check if port 5696 is listening
+    shell: |
+      ss -lntp | grep 5696
+    register: kmip_port
+    failed_when: false
+    changed_when: false
+
+  - debug:
+      var: kmip_port.stdout_lines
+
+  - name: Test localhost connectivity
+    shell: |
+      nc -zv 127.0.0.1 5696
+    register: kmip_connect
+    failed_when: false
+    changed_when: false
+
+  - debug:
+      var: kmip_connect.stderr_lines
+
+  - name: Show PyKMIP log
+    shell: |
+      cat /tmp/pykmip_server.log
+    register: kmip_log
+    failed_when: false
+    changed_when: false
+
+  - debug:
+      var: kmip_log.stdout_lines
 
   - name: copy the global manifest for mysql
     copy:
